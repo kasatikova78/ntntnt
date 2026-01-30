@@ -310,8 +310,11 @@ internal class HLSExtractor : IExtractor
             // 解析KEY
             else if (line.StartsWith(HLSTags.ext_x_key))
             {
-                // 如果KEY line相同则不再重复解析
-                if (line != lastKeyLine)
+                var uri = ParserUtil.GetAttribute(line, "URI");
+                var uri_last = ParserUtil.GetAttribute(lastKeyLine, "URI");
+                    
+                // 如果KEY URL相同，不进行重复解析
+                if (uri != uri_last)
                 {
                     // 调用处理器进行解析
                     var parsedInfo = ParseKey(line);
